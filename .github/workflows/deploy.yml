@@ -41,7 +41,7 @@ jobs:
       - name: Enviar arquivos do projeto
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # ou o caminho correto da saída do build
+          path: './clara' # ou o caminho correto da saída do build
 
       # Fazer deploy no GitHub Pages
       - name: Deploy Final
