@@ -19,27 +19,31 @@ jobs:
     env:
       SUBPATH: "/teste-deploy-next"
     steps:
-      # Clonar repositório
+      # Clonar o repositório
       - name: Clonagem
         uses: actions/checkout@v4
 
-      - name: instalar dependencias
-        uses: npm install
+      # Instalar dependências
+      - name: Instalar dependências
+        run: npm install
 
-      - name: build projeto
+      # Build do projeto
+      - name: Build do projeto
         run: npm run build
 
-      # Configurar GitHub Pages
-      - name: Configurações Página
+      # Configurar o GitHub Pages
+      - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
-      # Enviar arquivos do projeto
-      - name: Arquivos Projetos
+      # Enviar arquivos gerados pelo build
+      - name: Enviar arquivos do projeto
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './clara'
+          path: './dist' # ou o caminho correto da saída do build
 
-      # Fazer deploy final no GitHub Pages
+      # Fazer deploy no GitHub Pages
       - name: Deploy Final
         uses: actions/deploy-pages@v4
         id: deployment
