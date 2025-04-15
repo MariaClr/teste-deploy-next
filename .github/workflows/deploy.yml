@@ -1,0 +1,45 @@
+name: deploy do github pages maria clara
+
+on:
+  push:
+    branches:
+      - main  
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages-maria-clara
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    env:
+      SUBPATH: "/teste-deploy-next"
+    steps:
+      # Clonar repositório
+      - name: Clonagem
+        uses: actions/checkout@v4
+
+      - name: instalar dependencias
+        uses: npm install
+
+      - name: build projeto
+        run: npm run build
+
+      # Configurar GitHub Pages
+      - name: Configurações Página
+        uses: actions/configure-pages@v5
+
+      # Enviar arquivos do projeto
+      - name: Arquivos Projetos
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './clara'
+
+      # Fazer deploy final no GitHub Pages
+      - name: Deploy Final
+        uses: actions/deploy-pages@v4
+        id: deployment
